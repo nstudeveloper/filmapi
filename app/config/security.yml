@@ -12,7 +12,7 @@ security:
             pattern: ^/oauth/v2/token
             security: false
         api:
-            pattern: ^/                                # All URLs are protected
+            pattern: ^/^                                # All URLs are protected
             fos_oauth: true                            # OAuth2 protected resource
             stateless: true                            # Do no set session cookies
             anonymous: false                           # Anonymous access is not allowed

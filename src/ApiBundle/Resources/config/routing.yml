@@ -1,12 +1,24 @@
-api_homepage:
-    path:     /
-    defaults: { _controller: ApiBundle:Default:index }
+category_new:
+    path:     /category/new
+    defaults: { _controller: ApiBundle:Category:new }
+    methods:  POST
 
-api_demos:
-    type: rest
-    resource: ApiBundle\Controller\DemoController
+category_show:
+    path:     /category/{name}
+    defaults: { _controller: ApiBundle:Category:show }
+    methods:  GET
 
+category_list:
+    path:     /categories
+    defaults: { _controller: ApiBundle:Category:list }
+    methods:  GET
 
+category_update:
+    path:     /category/{name}
+    defaults: { _controller: ApiBundle:Category:update }
+    methods:  PUT|PATCH
 
-
-
+category_delete:
+    path:     /category/{name}
+    defaults: { _controller: ApiBundle:Category:delete }
+    methods:  DELETE
