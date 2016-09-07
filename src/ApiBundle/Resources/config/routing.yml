@@ -22,3 +22,14 @@ category_delete:
     path:     /category/{name}
     defaults: { _controller: ApiBundle:Category:delete }
     methods:  DELETE
+
+
+actor_new:
+    path:     /actor/new
+    defaults: { _controller: ApiBundle:Actor:new }
+    methods:  POST
+
+actor_show:
+    path:     /actor/{name}
+    defaults: { _controller: ApiBundle:Actor:show }
+    methods:  GET
