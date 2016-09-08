@@ -2,10 +2,12 @@
 
 namespace ApiBundle\Repository;
 
-class ActorRepository extends \Doctrine\ORM\EntityRepository
+use Doctrine\ORM\EntityRepository;
+
+class ActorRepository extends EntityRepository
 {
     public function findOneByName($name)
     {
-        return $this->findOneBy(['firstName' => $name]);
+        return $this->findOneBy(['firstname' => $name]);
     }
 }

@@ -9,11 +9,12 @@ class CategoryControllerTest extends ApiTestCase
     public function testPOST()
     {
         $category = 'Category' . rand(0, 999);
+        $category = '1';
         $data = array(
             'name' => $category,
         );
 
-        $response = $this->client->post('/category/new', [
+        $response = $this->client->post('/category', [
             'body' => json_encode($data)
         ]);
 
@@ -53,7 +54,7 @@ class CategoryControllerTest extends ApiTestCase
 
     private function createCategory($category)
     {
-        $response = $this->client->post('/category/new', [
+        $response = $this->client->post('/category', [
             'body' => json_encode($category)
         ]);
     }

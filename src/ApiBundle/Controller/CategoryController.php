@@ -6,10 +6,9 @@ use ApiBundle\Entity\Category;
 use ApiBundle\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use JMS\Serializer\Annotation as Serializer;
 
 class CategoryController extends Controller
 {
@@ -23,9 +22,9 @@ class CategoryController extends Controller
         $em->persist($category);
         $em->flush();
 
-        $data = $this->serializeCategory($category);
+        $json = $this->serialize($category);
 
-        $response = new JsonResponse(json_encode($data), 201);
+        $response = new Response($json, 201);
         $categoryUrl = $this->generateUrl(
             'category_show',
             ['name' => $category->getName()]
@@ -46,9 +45,9 @@ class CategoryController extends Controller
             throw $this->createNotFoundException('Category with name ' . $name . 'not found');
         }
 
-        $data = $this->serializeCategory($category);
+        $json = $this->serialize($category);
 
-        $response = new Response(json_encode($data), 200);
+        $response = new Response($json, 200);
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
@@ -60,13 +59,9 @@ class CategoryController extends Controller
             ->getRepository('ApiBundle:Category')
             ->findAll();
 
-        $data = array('categories' => array());
+        $json = $this->serialize(['categories' => $categories]);
 
-        foreach ($categories as $category) {
-            $data['categories'][] = $this->serializeCategory($category);
-        }
-
-        $response = new Response(json_encode($data), 200);
+        $response = new Response($json, 200);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
@@ -91,8 +86,8 @@ class CategoryController extends Controller
         $em->persist($category);
         $em->flush();
 
-        $data = $this->serializeCategory($category);
-        $response = new JsonResponse($data, 200);
+        $json = $this->serialize($category);
+        $response = new Response($json, 200);
         return $response;
     }
 
@@ -111,17 +106,15 @@ class CategoryController extends Controller
         return new Response(null, 204);
     }
 
-    private function serializeCategory(Category $category)
-    {
-        return [
-            'id' => $category->getId(),
-            'name' => $category->getName()
-        ];
-    }
-
     private function processForm(Request $request, FormInterface $form)
     {
         $data = json_decode($request->getContent(), true);
         $form->submit($data);
+    }
+
+    private function serialize($data)
+    {
+        return $this->container->get('jms_serializer')
+            ->serialize($data, 'json');
     }
 }

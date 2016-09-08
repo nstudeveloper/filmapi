@@ -1,5 +1,5 @@
 category_new:
-    path:     /category/new
+    path:     /category
     defaults: { _controller: ApiBundle:Category:new }
     methods:  POST
 
@@ -25,7 +25,7 @@ category_delete:
 
 
 actor_new:
-    path:     /actor/new
+    path:     /actor
     defaults: { _controller: ApiBundle:Actor:new }
     methods:  POST
 
@@ -33,3 +33,18 @@ actor_show:
     path:     /actor/{name}
     defaults: { _controller: ApiBundle:Actor:show }
     methods:  GET
+
+actor_list:
+    path:     /actors
+    defaults: { _controller: ApiBundle:Actor:list }
+    methods:  GET
+
+actor_update:
+    path:     /actor/{name}
+    defaults: { _controller: ApiBundle:Actor:update }
+    methods:  PUT|PATCH
+
+actor_delete:
+    path:     /actor/{name}
+    defaults: { _controller: ApiBundle:Actor:delete }
+    methods:  DELETE
